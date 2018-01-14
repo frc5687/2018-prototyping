@@ -2,10 +2,9 @@ package org.frc5687.powerup.prototyping.subsystems;
 
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc5687.powerup.prototyping.Constants;
-import org.frc5687.powerup.prototyping.Robot;
 import org.frc5687.powerup.prototyping.RobotMap;
 import org.frc5687.powerup.prototyping.commands.DriveWith2Joysticks;
 
@@ -18,14 +17,16 @@ public class DriveTrain extends Subsystem {
     private VictorSP leftRearMotor;
     private VictorSP rightFrontMotor;
     private VictorSP rightRearMotor;
-    private AnalogInput ultraSonicSensor;
+    private Ultrasonic ultraSonicSensor;
 
     public DriveTrain() {
         leftFrontMotor = new VictorSP(RobotMap.DriveTrain.LEFT_FRONT_MOTOR);
         leftRearMotor = new VictorSP(RobotMap.DriveTrain.LEFT_REAR_MOTOR);
         rightFrontMotor = new VictorSP(RobotMap.DriveTrain.RIGHT_FRONT_MOTOR);
         rightRearMotor = new VictorSP(RobotMap.DriveTrain.RIGHT_REAR_MOTOR);
-        ultraSonicSensor = new AnalogInput(RobotMap.DriveTrain.ULTRASONIC_SENSOR);
+        ultraSonicSensor = new Ultrasonic(RobotMap.DriveTrain.ULTRASONIC_SENSOR_TRIGGER,RobotMap.DriveTrain.ULTRASONIC_SENSOR_ECHO);
+        ultraSonicSensor.setAutomaticMode(true);
+
     }
 
     @Override
@@ -41,7 +42,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public void updateDashboard() {
-        SmartDashboard.putNumber("Ultra Sonic Distance (cm)", (ultraSonicSensor.getVoltage() * 1000) / Constants.DriveTrain.MB1200_5V_MV_PER_CM);
+        SmartDashboard.putNumber("Ultra Sonic Distance (in)", ultraSonicSensor.getRangeInches());
     }
 
 }
