@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.frc5687.powerup.prototyping.subsystems.DriveTrain;
 import com.kauailabs.navx.*;
+import org.frc5687.powerup.prototyping.utils.PDP;
 
 public class Robot extends IterativeRobot  {
 
@@ -18,6 +19,7 @@ public class Robot extends IterativeRobot  {
     public static DriveTrain driveTrain;
     public static AHRS ahrs;
 
+    private PDP pdp;
     public Robot() {
     }
 
@@ -30,9 +32,11 @@ public class Robot extends IterativeRobot  {
     public void robotInit() {
         robot = this;
 
+
         ahrs = new AHRS(SPI.Port.kMXP);
         driveTrain = new DriveTrain();
 
+        pdp = new PDP();
         oi = new OI();
     }
 
@@ -81,6 +85,7 @@ public class Robot extends IterativeRobot  {
     }
 
     public void updateDashboard() {
+        pdp.updateDashboard();
     }
 
 }
