@@ -1,8 +1,10 @@
 package org.frc5687.powerup.prototyping;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.frc5687.powerup.prototyping.subsystems.DriveTrain;
@@ -17,6 +19,7 @@ public class Robot extends IterativeRobot  {
 
     public static DriveTrain driveTrain;
     public static AHRS ahrs;
+    public static SerialPort serialPort;
 
     public Robot() {
     }
@@ -34,6 +37,8 @@ public class Robot extends IterativeRobot  {
         driveTrain = new DriveTrain();
 
         oi = new OI();
+
+        serialPort = new SerialPort(115200, SerialPort.Port.kMXP);
     }
 
     @Override
@@ -59,6 +64,10 @@ public class Robot extends IterativeRobot  {
 
     @Override
     public void robotPeriodic() {
+        String stringInBuffer = serialPort.readString();
+        if (stringInBuffer.length() > 0) {
+            DriverStation.reportError(stringInBuffer, true);
+        }
         updateDashboard();
     }
 
