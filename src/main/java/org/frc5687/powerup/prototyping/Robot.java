@@ -104,8 +104,8 @@ public class Robot extends IterativeRobot  {
     }
 
     public void updateDashboard() {
-        SmartDashboard.putNumber("JeVois/x", jeVoisProxy.GetX());
-        SmartDashboard.putNumber("JeVois/y", jeVoisProxy.GetY());
+        //SmartDashboard.putNumber("JeVois/x", jeVoisProxy.GetX());
+        //SmartDashboard.putNumber("JeVois/y", jeVoisProxy.GetY());
     }
 
 }
