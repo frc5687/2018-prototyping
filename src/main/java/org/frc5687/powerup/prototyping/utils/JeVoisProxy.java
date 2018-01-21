@@ -3,6 +3,7 @@ package org.frc5687.powerup.prototyping.utils;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.frc5687.powerup.prototyping.Robot;
 import org.frc5687.powerup.prototyping.RobotMap;
 
 /**
@@ -42,17 +43,12 @@ public class JeVoisProxy {
 
         protected JeVoisListener(JeVoisProxy proxy) {
             this.proxy = proxy;
-            jevoisPort = new SerialPort(115200, SerialPort.Port.kMXP);
+            jevoisPort = new SerialPort(115200, RobotMap.JeVois.PORT);
         }
 
         public void run() {
-            int i = 0;
             while (true) {
                 try {
-                    /*
-                    String data = "JeVoisTargetingInfo: 23;" + Integer.toString(i);//
-                    i++;
-                    */
                     String data = jevoisPort.readString();
                     if (data.length() == 0) {
                         continue;
@@ -65,28 +61,13 @@ public class JeVoisProxy {
                         continue;
                     }
                     String payload = data.substring(identifier_string.length(), data.length());
-                    //DriverStation.reportError(data, false);
-                    //DriverStation.reportError(data.substring(0, identifier_string.length()), false);
-                    //DriverStation.reportError(payload, false);
-                    /*
-                    if (!data.substring(0, identifier_string.length()).equals(identifier_string)) {
-                        break;
-                    }
-                    data = data.substring(identifier_string.length(), data.length());
-                    */
+                    // Remove whitespace in the payload
                     payload = payload.replaceAll("\\s+", "");
                     SmartDashboard.putString("JeVois/payload", payload);
 
                     String[] a = payload.split(";");
-                    SmartDashboard.putString("JeVois/a[0]", a[0]);
-                    SmartDashboard.putNumber("JeVois/a[0].length()", a[0].length());
-                    SmartDashboard.putString("JeVois/a[1]", a[1]);
-                    SmartDashboard.putNumber("JeVois/a[1].length()", a[1].length());
                     int x = Integer.parseInt(a[0]);
-                    SmartDashboard.putNumber("JeVois/x", x);
                     int y = Integer.parseInt(a[1]);
-                    SmartDashboard.putNumber("JeVois/y", y);
-                    // DriverStation.reportError(String.format("x: %s; y: %s", x, y), false);
                     proxy.Set(x, y);
                     Thread.sleep(20);
                 } catch (Exception e) {

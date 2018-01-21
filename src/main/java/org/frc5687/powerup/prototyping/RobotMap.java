@@ -1,5 +1,7 @@
 package org.frc5687.powerup.prototyping;
 
+import edu.wpi.first.wpilibj.SerialPort;
+
 public class RobotMap {
 
     public class DriveTrain {
@@ -12,6 +14,10 @@ public class RobotMap {
     public class Climber {
         public static final int MOTOR_A = 6;
         public static final int MOTOR_B = 7;
+    }
+
+    public static class JeVois {
+        public static final SerialPort.Port PORT = SerialPort.Port.kMXP;
     }
 
 }
