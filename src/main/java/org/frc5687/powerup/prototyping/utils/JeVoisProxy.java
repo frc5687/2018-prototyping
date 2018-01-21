@@ -54,16 +54,18 @@ public class JeVoisProxy {
                     i++;
                     */
                     String data = jevoisPort.readString();
+                    SmartDashboard.putString("JeVois/data", data);
                     if (data.length() == 0) {
                         continue;
                     }
-                    String identifier_string = "JeVoisTargetingInfo: ";
+                    String identifier_string = "JVTI:";
                     // Check to see if the identifier_string prepends our payload
                     if (data.length() <= identifier_string.length() || !data.substring(0, identifier_string.length()).equals(identifier_string)) {
                         DriverStation.reportError(String.format("Rejected %s", data), false);
                         continue;
                     }
                     String payload = data.substring(identifier_string.length(), data.length());
+                    SmartDashboard.putString("JeVois/payload", payload);
                     //DriverStation.reportError(data, false);
                     //DriverStation.reportError(data.substring(0, identifier_string.length()), false);
                     //DriverStation.reportError(payload, false);
@@ -76,6 +78,8 @@ public class JeVoisProxy {
                     String[] a = payload.split(";");
                     int x = Integer.parseInt(a[0]);
                     int y = Integer.parseInt(a[1]);
+                    SmartDashboard.putNumber("JeVois/x", x);
+                    SmartDashboard.putNumber("JeVois/y", y);
                     // DriverStation.reportError(String.format("x: %s; y: %s", x, y), false);
                     proxy.Set(x, y);
                     Thread.sleep(20);
