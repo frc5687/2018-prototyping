@@ -7,6 +7,7 @@ public class RobotMap {
         public static final int LEFT_REAR_MOTOR = 1;
         public static final int RIGHT_FRONT_MOTOR = 3;
         public static final int RIGHT_REAR_MOTOR = 4;
+        public static final int IR_SENSOR = 0;
     }
 
     public class Climber {
