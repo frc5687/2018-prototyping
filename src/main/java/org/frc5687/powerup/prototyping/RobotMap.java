@@ -14,4 +14,8 @@ public class RobotMap {
         public static final int MOTOR_B = 7;
     }
 
+    public class Carriage {
+        public static final int HALL_EFFECT_SENSOR = 0;
+    }
+
 }
