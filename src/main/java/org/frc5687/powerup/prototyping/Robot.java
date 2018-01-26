@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc5687.powerup.prototyping.subsystems.DriveTrain;
-import com.kauailabs.navx.*;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DigitalOutput;
 
 public class Robot extends IterativeRobot  {
 
@@ -17,6 +19,8 @@ public class Robot extends IterativeRobot  {
 
     public static DriveTrain driveTrain;
     public static AHRS ahrs;
+    private DigitalInput heSensor;
+    private DigitalOutput light;
 
     public Robot() {
     }
@@ -34,6 +38,9 @@ public class Robot extends IterativeRobot  {
         driveTrain = new DriveTrain();
 
         oi = new OI();
+
+        heSensor = new DigitalInput(0);
+        light = new DigitalOutput(9);
     }
 
     @Override
@@ -60,6 +67,9 @@ public class Robot extends IterativeRobot  {
     @Override
     public void robotPeriodic() {
         updateDashboard();
+        boolean magnetIsDetected = !heSensor.get();
+        SmartDashboard.putBoolean("magnetIsDetected", magnetIsDetected);
+        light.set(magnetIsDetected);
     }
 
     @Override
